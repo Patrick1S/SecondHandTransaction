@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.patrick.springboot.mapper.OrdersMapper">
+
+    <select id="page" resultType="com.patrick.springboot.entity.Orders">
+        select o.*, u.username, u.nickname from orders o left join sys_user u on o.user_id = u.id
+    <where>
+        <if test="no != ''">
+            and o.no like  concat('%', #{no}, '%')
+        </if>
+        <if test="state != null">
+            and o.state like  concat('%',#{state}, '%')
+        </if>
+    </where>
+    </select>
+
+
+    <select id="frontPage" resultType="com.patrick.springboot.entity.Orders">
+        select o.*, u.username, u.nickname from orders o left join sys_user u on o.user_id = u.id
+        <where>
+            <if test="no != ''">
+                and o.no like  concat('%', #{no}, '%')
+            </if>
+
+            <if test="role != null">
+                and o.login_id = #{loginId}
+            </if>
+
+            <if test="state != null">
+                and o.state = #{state}
+            </if>
+        </where>
+    </select>
+
+    <select id="frontPageOrders" resultType="com.patrick.springboot.entity.Orders">
+        select o.*, u.username, u.nickname from orders o left join sys_user u on o.user_id = u.id
+        <where>
+            <if test="no != ''">
+                and o.no like  concat('%', #{no}, '%')
+            </if>
+
+            <if test="role != null">
+                and o.login_id = #{loginId}
+            </if>
+        </where>
+    </select>
+
+
+    <select id="frontPageTransOrders" resultType="com.patrick.springboot.entity.Orders">
+        select o.*, u.username, u.nickname from orders o left join sys_user u on o.login_id = u.id
+        <where>
+            <if test="no != ''">
+                and o.no like  concat('%', #{no}, '%')
+            </if>
+
+            <if test="role != null">
+                and o.user_id = #{sellerId}
+            </if>
+
+            <if test="state != null">
+                and o.state = #{state}
+            </if>
+        </where>
+    </select>
+    <select id="frontPageAfterSales" resultType="com.patrick.springboot.entity.Orders">
+        select o.*, u.username, u.nickname from orders o left join sys_user u on o.user_id = u.id
+        <where>
+            <if test="no != ''">
+                and o.no like  concat('%', #{no}, '%')
+            </if>
+
+            <if test="role != null">
+                and o.login_id = #{loginId}
+            </if>
+
+            <if test="state != null">
+                and o.state like  concat('%',#{state}, '%')
+            </if>
+        </where>
+    </select>
+</mapper>
